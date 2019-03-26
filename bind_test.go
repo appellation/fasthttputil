@@ -88,6 +88,12 @@ func TestBind(t *testing.T) {
 		return
 	}
 
+	req.SetBodyString("foo=bar&bar=10")
+	err = c.Do(req, res)
+	if !isOK(t, err, res) || !confirmResponse(t, &Test{Foo: "bar", Bar: 10}, res) {
+		return
+	}
+
 	req.SetBodyString("{\"foo\": \"bar\"}")
 	req.Header.SetContentType("application/json")
 	err = c.Do(req, res)
