@@ -19,11 +19,11 @@ type Test struct {
 func confirmResponse(t *testing.T, expected *Test, res *fasthttp.Response) bool {
 	actual := &Test{}
 	err := json.Unmarshal(res.Body(), actual)
-	return !assert.NoError(t, err) || !assert.EqualValues(t, expected, actual)
+	return assert.NoError(t, err) && assert.EqualValues(t, expected, actual)
 }
 
 func isOK(t *testing.T, err error, res *fasthttp.Response) bool {
-	return !assert.NoError(t, err) || !assert.Equal(t, fasthttp.StatusOK, res.StatusCode(), string(res.Body()))
+	return assert.NoError(t, err) && assert.Equal(t, fasthttp.StatusOK, res.StatusCode(), string(res.Body()))
 }
 
 func TestBind(t *testing.T) {
