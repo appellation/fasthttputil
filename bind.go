@@ -47,7 +47,7 @@ func BindForm(ctx *fasthttp.RequestCtx, d interface{}) error {
 
 		conv, err := convert.FromString(string(from), field.Type())
 		if err != nil {
-			return err
+			return ErrInvalidParameter
 		}
 
 		field.Set(conv)
